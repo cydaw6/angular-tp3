@@ -4,6 +4,15 @@ import { Todo } from './model/todo';
 @Injectable()
 export class TodoService {
   public todos: Todo[] = [];
+
+  constructor() {
+    this.createTodo('Tp Haskell');
+    this.createTodo('Tp2 Angular');
+    this.todos[1].done = true;
+    this.createTodo('ipynb graphes');
+    this.createTodo('Projet compilation');
+  }
+
   getTodos(): Todo[] {
     return this.todos;
   }
@@ -26,6 +35,4 @@ export class TodoService {
     }
     this.todos[i] = todo;
   }
-
-  constructor() {}
 }
