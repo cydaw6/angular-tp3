@@ -16,9 +16,7 @@ import { TodoService } from './todo.service';
 })
 export class TodoListComponent implements OnInit {
   public textInput: string;
-  public todoService: TodoService;
-
-  constructor(todoService: TodoService) {
+  constructor(public todoService: TodoService) {
     this.todoService = todoService;
   }
 

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CustomDatePipe } from './custom-date.pipe';
 import { Todo } from '../model/todo';
 
 @Component({
@@ -8,6 +9,7 @@ import { Todo } from '../model/todo';
   templateUrl: './todo-item.component.html',
   styleUrls: ['./todo-item.component.css'],
   imports: [CommonModule, FormsModule],
+  providers: [CustomDatePipe],
   standalone: true,
 })
 export class TodoItemComponent implements OnInit {
@@ -15,6 +17,10 @@ export class TodoItemComponent implements OnInit {
    * Tell if the todo is being edited
    */
   public editMode: boolean = false;
+
+  constructor(public customDate: CustomDatePipe) {
+    this.customDate = customDate;
+  }
 
   @Input()
   todo: Todo;
@@ -38,8 +44,6 @@ export class TodoItemComponent implements OnInit {
   changeEditMode(): void {
     this.editMode = !this.editMode;
   }
-
-  constructor() {}
 
   ngOnInit() {}
 }
