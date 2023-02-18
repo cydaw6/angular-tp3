@@ -2,8 +2,8 @@
   <div
     class="card"
     [ngClass]="{
-      'main-div grey lighten-2': state,
-      'blue-grey darken-3  white-text': !state
+      'main-div grey lighten-2': todo.done,
+      'blue-grey darken-3  white-text': !todo.done
     }"
   >
     <div class="card-content">
@@ -15,13 +15,13 @@
               <input
                 type="text"
                 name="label"
-                [(ngModel)]="label"
+                [(ngModel)]="todo.label"
                 (keyup.enter)="updateLabel()"
               />
             </label>
           </div>
         </div>
-        <ng-template #elseBlock> {{ label }} </ng-template>
+        <ng-template #elseBlock> {{ todo.label }} </ng-template>
         <div *ngIf="editMode == false">
           <i class="material-icons right" (click)="changeEditMode()">edit</i>
         </div>
@@ -29,7 +29,7 @@
     </div>
     <div class="card-action">
       <a href="#" (click)="changeItemState()">
-        {{ state ? 'done' : 'undone' }}</a
+        {{ todo.done ? 'done' : 'undone' }}</a
       >
     </div>
   </div>

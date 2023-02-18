@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Todo } from '../model/todo';
 
 @Component({
   selector: 'todo-item',
@@ -16,31 +17,28 @@ export class TodoItemComponent implements OnInit {
   public editMode: boolean = false;
 
   @Input()
-  index: number;
-  @Input()
-  label: String;
-  @Input()
-  state: boolean;
+  todo: Todo;
   @Output()
-  newTodoItemEvent = new EventEmitter<number>();
+  newTodoItemEvent = new EventEmitter<Todo>();
   @Output()
-  updateLabelEvent = new EventEmitter<any>();
+  updateLabelEvent = new EventEmitter<Todo>();
 
   /**
    * Change the state in the todo item of
    * the list in parent by passing the index
    */
   changeItemState(): void {
-    this.newTodoItemEvent.emit(this.index);
+    this.todo.done = !this.todo.done;
+    this.newTodoItemEvent.emit(this.todo);
+  }
+
+  updateLabel(): void {
+    this.updateLabelEvent.emit(this.todo);
+    this.editMode = false;
   }
 
   changeEditMode(): void {
     this.editMode = !this.editMode;
-  }
-
-  updateLabel(): void {
-    this.updateLabelEvent.emit({ label: this.label, index: this.index });
-    this.editMode = false;
   }
 
   constructor() {}

@@ -1,12 +1,10 @@
 <div class="container">
   <div class="row">
-    <div *ngFor="let todo of todos; index as i">
+    <div *ngFor="let todo of todoService.getTodos()">
       <todo-item
-        [label]="todo.label"
-        [state]="todo.done"
-        [index]="i"
-        (newTodoItemEvent)="updateTodoState($event)"
-        (updateLabelEvent)="updateTodoLabel($event)"
+        [todo]="todo"
+        (updateLabel)="updateTodo($event)"
+        (changeItemState)="updateTodo($event)"
       >
       </todo-item>
     </div>
