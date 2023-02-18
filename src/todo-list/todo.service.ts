@@ -6,20 +6,15 @@ export class TodoService {
   public todos: Todo[] = [];
 
   constructor() {
-    this.createTodo('Tp Haskell');
-    this.createTodo('Tp2 Angular');
-    this.todos[1].done = true;
-    this.createTodo('ipynb graphes');
-    this.createTodo('Projet compilatioun');
-
     let savedTodos = localStorage.getItem('todos');
-    if (savedTodos) {
+    if (savedTodos != null) {
       this.todos = JSON.parse(savedTodos);
+      console.log(JSON.parse(savedTodos));
     }
   }
 
   saveTodos() {
-    localStorage.setItem('todos', this.todos.toString());
+    localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 
   getTodos(): Todo[] {
