@@ -19,8 +19,6 @@ export class TodoItemComponent implements OnInit {
   @Input()
   todo: Todo;
   @Output()
-  newTodoItemEvent = new EventEmitter<Todo>();
-  @Output()
   updateLabelEvent = new EventEmitter<Todo>();
 
   /**
@@ -29,7 +27,7 @@ export class TodoItemComponent implements OnInit {
    */
   changeItemState(): void {
     this.todo.done = !this.todo.done;
-    this.newTodoItemEvent.emit(this.todo);
+    this.updateLabelEvent.emit(this.todo);
   }
 
   updateLabel(): void {
