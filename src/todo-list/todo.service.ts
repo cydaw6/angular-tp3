@@ -10,7 +10,16 @@ export class TodoService {
     this.createTodo('Tp2 Angular');
     this.todos[1].done = true;
     this.createTodo('ipynb graphes');
-    this.createTodo('Projet compilation');
+    this.createTodo('Projet compilatioun');
+
+    let savedTodos = localStorage.getItem('todos');
+    if (savedTodos) {
+      this.todos = JSON.parse(savedTodos);
+    }
+  }
+
+  saveTodos() {
+    localStorage.setItem('todos', this.todos.toString());
   }
 
   getTodos(): Todo[] {
@@ -25,6 +34,7 @@ export class TodoService {
       label: label,
       done: false,
     });
+    this.saveTodos();
   }
 
   updateTodo(todo: Todo): void {
@@ -34,5 +44,6 @@ export class TodoService {
       return;
     }
     this.todos[i] = todo;
+    this.saveTodos();
   }
 }
