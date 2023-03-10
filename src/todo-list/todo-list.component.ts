@@ -47,6 +47,7 @@ export class TodoListComponent implements OnInit {
     this.form = new FormGroup({
       state: new FormControl('Paris'),
       label: new FormControl(),
+      city: new FormControl(),
     });
   }
 }
