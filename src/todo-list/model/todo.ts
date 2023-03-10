@@ -3,4 +3,5 @@ export interface Todo {
   done: boolean;
   id: number;
   creationDate: number;
+  city: string;
 }

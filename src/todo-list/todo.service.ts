@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './model/todo';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TodoService {
   public todos: Todo[] = [];
 
@@ -28,6 +30,7 @@ export class TodoService {
       creationDate: new Date().valueOf(),
       label: label,
       done: false,
+      city: '',
     });
     this.saveTodos();
   }
