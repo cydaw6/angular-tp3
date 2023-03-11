@@ -20,7 +20,7 @@ export class LocalisationService {
   }
 
   addCity(city: string): void {
-    if (!city) {
+    if (city) {
       this.cities.add(city);
     }
   }
