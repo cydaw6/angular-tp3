@@ -23,14 +23,14 @@ export class TodoService {
     return this.todos;
   }
 
-  createTodo(label: string): void {
+  createTodo(label: string, city: string): void {
     if (!label) return;
     this.todos.push({
       id: Math.floor(Math.random() * 1000),
       creationDate: new Date().valueOf(),
       label: label,
       done: false,
-      city: '',
+      city: city,
     });
     this.saveTodos();
   }

@@ -4,13 +4,24 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LocalisationService {
-  private cities: String[] = ['Paris', 'Toulouse', 'Marseille', 'Bordeaux'];
+  private cities: Set<string> = new Set([
+    'Paris',
+    'Toulouse',
+    'Marseille',
+    'Bordeaux',
+  ]);
   constructor() {}
 
   searchCity(prefix: string): String[] {
     if (!prefix) {
-      return this.cities;
+      return [...this.cities];
     }
-    return this.cities.filter((c) => c.startsWith(prefix));
+    return [...this.cities].filter((c) => c.startsWith(prefix));
+  }
+
+  addCity(city: string): void {
+    if (!city) {
+      this.cities.add(city);
+    }
   }
 }

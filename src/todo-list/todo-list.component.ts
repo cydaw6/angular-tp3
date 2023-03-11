@@ -1,12 +1,14 @@
 declare var M: any;
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocalisationService } from './localisation.service';
 import { Todo } from './model/todo';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoService } from './todo.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DOCUMENT } from '@angular/common';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-todo-list',
@@ -18,12 +20,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class TodoListComponent implements OnInit {
   public textInput: string;
-  public cities: String[];
   public form: any;
 
   constructor(
     public todoService: TodoService,
-    public localisationService: LocalisationService
+    public localisationService: LocalisationService,
+    private formBuilder: FormBuilder
   ) {
     this.todoService = todoService;
     this.localisationService = localisationService;
@@ -34,34 +36,46 @@ export class TodoListComponent implements OnInit {
     M.toast({ html: 'Mise à jour effectuée' });
   }
 
-  addTodo() {
-    if (!this.textInput) return;
-    this.todoService.createTodo(this.textInput);
-    M.toast({ html: "La tâche '" + this.textInput + "' à été ajouté" });
-    this.textInput = '';
-  }
+  addTodo(): void {
+    if (this.form.valid) {
+      this.todoService.createTodo(this.form.value.label, this.form.value.city);
+      M.toast({
+        html: "La tâche '" + this.form.value.label + "' à été ajouté",
+      });
+      this.form.reset();
 
-  searchCity(event: any) {
-    console.log(this.form.city);
-    if (!this.form.city) {
-      this.cities = [];
-    } else {
-      this.cities = this.localisationService.searchCity(this.form.city);
+      this.localisationService.addCity(this.form.value.label);
+      this.updateCities();
+      return;
     }
   }
 
-  autoCompleteCity(event: any) {
-    console.log(event);
-    this.form.city = event;
+  updateCities() {
+    let data = {};
+    this.localisationService.searchCity('').forEach((c) => {
+      data[c.toString()] = null;
+    });
+
+    let elems = document.querySelectorAll('.autocomplete');
+    M.Autocomplete.getInstance(elems)?.instance.destroy();
+
+    M.Autocomplete.init(elems, {
+      data: data,
+    });
   }
 
   ngOnInit() {
-    this.cities = this.localisationService.searchCity('');
     //console.log(this.cities);
-    this.form = new FormGroup({
-      state: new FormControl('Paris'),
-      label: new FormControl(),
-      city: new FormControl(),
-    });
+    this.form = this.formBuilder.group(
+      {
+        label: new FormControl('', [
+          Validators.required,
+          Validators.minLength(1),
+        ]),
+        city: new FormControl('', Validators.required),
+      },
+      { updateOn: 'submit' }
+    );
+    this.updateCities();
   }
 }
