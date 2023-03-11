@@ -10,39 +10,39 @@
     Label
     <input type="text" formControlName="label" /><br />
     City
-    <input type="text" formControlName="city" /><br />
-    <select formControlName="state">
-      <option value="" disabled>Choose a state</option>
-      <option *ngFor="let city of cities" [ngValue]="city">
-        {{ city }}
-      </option>
-    </select>
+    <input
+      type="text"
+      name="search-box"
+      class="search-box"
+      formControlName="city"
+      [(ngModel)]="form.city"
+      (keyup)="searchCity($event)"
+    />
+    <section class="search-results">
+      <ng-template ngFor let-result [ngForOf]="cities" let-i="index">
+        <div (click)="autoCompleteCity(result)">
+          <hr *ngIf="i > 0" />
+          <p>{{ result }}</p>
+        </div>
+      </ng-template>
+    </section>
   </form>
-  <p>Form value: {{ f.value | json }}</p>
+  <!-- <p>Form value: {{ f.value | json }}</p> -->
+
+  <!--  <input
+    type="text"
+    name="search-box"
+    class="search-box"
+    (keyup)="searchCity($event)"
+  />
+  <section class="search-results">
+    <ng-template ngFor let-result [ngForOf]="cities" let-i="index">
+      <hr *ngIf="i > 0" />
+      <p>{{ result }}</p>
+    </ng-template>
+  </section> -->
 
   <div>
-    <label name="label">
-      New task
-      <!--  <input
-        type="text"
-        [(ngModel)]="textInput"
-        name="label"
-        (keyup.enter)="addTodo()"
-      /> -->
-    </label>
-    <!-- <label name="city">
-      Localisation
-      <input
-        type="text"
-        id="autocomplete-input"
-        class="autocomplete"
-        [(ngModel)]="cityInput"
-        name="city"
-        (keydown)="localisationService.searchCity(cityInput)"
-      />
-    </label>
- -->
-
     <button
       class="btn waves-effect waves-light"
       type="submit"

@@ -41,6 +41,20 @@ export class TodoListComponent implements OnInit {
     this.textInput = '';
   }
 
+  searchCity(event: any) {
+    console.log(this.form.city);
+    if (!this.form.city) {
+      this.cities = [];
+    } else {
+      this.cities = this.localisationService.searchCity(this.form.city);
+    }
+  }
+
+  autoCompleteCity(event: any) {
+    console.log(event);
+    this.form.city = event;
+  }
+
   ngOnInit() {
     this.cities = this.localisationService.searchCity('');
     //console.log(this.cities);

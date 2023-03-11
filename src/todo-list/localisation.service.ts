@@ -8,7 +8,6 @@ export class LocalisationService {
   constructor() {}
 
   searchCity(prefix: string): String[] {
-    return this.cities;
     if (!prefix) {
       return this.cities;
     }
